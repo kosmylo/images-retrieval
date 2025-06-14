@@ -45,7 +45,13 @@ def download_image(image_info, category, output_dir):
     # Check for English title
     if not is_english_title(title_no_prefix):
         logging.info(f"Skipping non-English title: {title_no_prefix}")
-        return
+        return False
+    
+    # Filter only image MIME types
+    image_mime = image_info['imageinfo'][0]['mime']
+    if not image_mime.startswith('image/'):
+        logging.info(f"Skipping non-image file: {title_no_prefix} with MIME type {image_mime}")
+        return False
 
     # Ensure proper file extension handling
     image_extension = os.path.splitext(image_name)[1]
@@ -90,6 +96,8 @@ def download_image(image_info, category, output_dir):
 
     logging.info(f"Downloaded and saved: {title_no_prefix}")
 
+    return True
+
 def download_wikimedia_images(categories, max_images_per_category, output_dir):
     logging.info("Starting Wikimedia Commons image retrieval...")
     os.makedirs(output_dir, exist_ok=True)
@@ -101,9 +109,10 @@ def download_wikimedia_images(categories, max_images_per_category, output_dir):
 
         for image_info in images:
             try:
-                download_image(image_info, category, output_dir)
-                logging.info(f"Downloaded and saved metadata: {image_info['title']}")
-                downloaded += 1
+                success = download_image(image_info, category, output_dir)
+                if success:
+                    downloaded += 1
+                    logging.info(f"Downloaded and saved metadata: {image_info['title']}")
                 if downloaded >= max_images_per_category:
                     break
             except Exception as e:
