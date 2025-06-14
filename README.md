@@ -29,6 +29,7 @@ A Docker Compose–based pipeline designed to **collect, download, and annotate*
 
 ## 🗂 Repository Structure
 
+```text
 images_retrieval
 ├── .env
 ├── .gitignore
@@ -59,6 +60,7 @@ images_retrieval
     ├── nasa_retrieval.py
     ├── wikimedia_retrieval.py
     └── wikipedia_images_retrieval.py
+```
 
 - **`main.py`**: Orchestrates retrieval processes from configured sources.
 - **`scripts/`**: Individual scripts managing retrieval from each data source.
