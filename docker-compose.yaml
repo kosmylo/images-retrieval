@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  images_collector:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - ./output:/app/output
+      - ./logs:/app/logs
+      - ./secrets/kaggle.json:/root/.config/kaggle/kaggle.json

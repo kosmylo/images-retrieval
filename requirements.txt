@@ -1,0 +1,8 @@
+requests
+pdf2image
+kaggle
+tdqm
+rasterio
+bs4
+feedparser
+langdetect
